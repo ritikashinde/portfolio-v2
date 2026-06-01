@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import FadeIn from "@/components/FadeIn";
+import RobotGame from "@/components/RobotThing";
 export default function Home() {
   const skills = [
     "Machine Learning",
@@ -15,7 +16,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="grid-bg min-h-screen bg-black text-white">
+    <main className="grid-bg min-h-screen bg-[#0E1712] text-[#D8E1D3]">
       {/* NAVBAR */}
 <nav
   className="
@@ -29,7 +30,7 @@ max-w-7xl
 rounded-full
 border
 border-white/10
-bg-black/50
+bg-[#16231B]/70
 px-6
 py-4
 backdrop-blur-xl
@@ -42,27 +43,27 @@ shadow-black/20
     {/* LEFT */}
     <div className="hidden gap-6 text-sm md:flex">
 
-      <a href="#home" className="text-zinc-400 hover:text-white">
+      <a href="#home" className="text-[#AAB7A7] hover:text-white">
         Home
       </a>
 
-      <a href="#about" className="text-zinc-400 hover:text-white">
+      <a href="#about" className="text-[#AAB7A7] hover:text-white">
         About
       </a>
 
-      <a href="#journey" className="text-zinc-400 hover:text-white">
+      <a href="#journey" className="text-[#AAB7A7] hover:text-white">
         Journey
       </a>
 
-      <a href="#work" className="text-zinc-400 hover:text-white">
+      <a href="#work" className="text-[#AAB7A7] hover:text-white">
         Projects
       </a>
 
-      <a href="#beyond" className="text-zinc-400 hover:text-white">
+      <a href="#beyond" className="text-[#AAB7A7] hover:text-white">
         Beyond Code
       </a>
 
-      <a href="#creative" className="text-zinc-400 hover:text-white">
+      <a href="#creative" className="text-[#AAB7A7] hover:text-white">
         Creative Tech
       </a>
 
@@ -73,7 +74,7 @@ shadow-black/20
 
   <a
     href="mailto:ritikashinde98@gmail.com"
-    className="text-zinc-400 transition hover:text-white"
+    className="text-[#AAB7A7] transition hover:text-white"
     aria-label="Email"
   >
     <MdEmail />
@@ -83,7 +84,7 @@ shadow-black/20
     href="https://github.com/ritikashinde"
     target="_blank"
     rel="noopener noreferrer"
-    className="text-zinc-400 transition hover:text-white"
+    className="text-[#AAB7A7] transition hover:text-white"
     aria-label="GitHub"
   >
     <FaGithub />
@@ -93,7 +94,7 @@ shadow-black/20
     href="https://www.linkedin.com/in/ritika-shinde-1b7a24259/"
     target="_blank"
     rel="noopener noreferrer"
-    className="text-zinc-400 transition hover:text-white"
+    className="text-[#AAB7A7] transition hover:text-white"
     aria-label="LinkedIn"
   >
     <FaLinkedin />
@@ -103,7 +104,7 @@ shadow-black/20
     href="https://medium.com/@ritikashinde98"
     target="_blank"
     rel="noopener noreferrer"
-    className="text-zinc-400 transition hover:text-white"
+    className="text-[#AAB7A7] transition hover:text-white"
     aria-label="Medium"
   >
     <FaMedium />
@@ -116,31 +117,43 @@ shadow-black/20
       {/* HERO */}
       <section
   id="home"
-  className="flex min-h-screen flex-col justify-center px-8 pt-32 md:px-20"
+  className="flex min-h-screen items-center px-8 pt-32 md:px-20"
 >
-        <h1 className="text-6xl font-bold leading-[0.9] tracking-tight md:text-8xl">
-          RITIKA
-          <br />
-          SHINDE
-        </h1>
+  <div className="grid w-full items-center gap-16 lg:grid-cols-2">
 
-        <div className="mt-8 text-xl text-zinc-300">
-          <p>Machine Learning Engineer</p>
-          <p className="mt-1">Researcher • Writer</p>
-        </div>
+    {/* LEFT SIDE */}
+    <div>
+      <h1 className="text-6xl font-bold leading-[0.9] tracking-tight md:text-8xl">
+        RITIKA
+        <br />
+        SHINDE
+      </h1>
 
-        <p className="mt-6 max-w-2xl text-lg text-zinc-400">
-          Building intelligent systems through machine learning,
-          computer vision, and generative AI.
-        </p>
+      <div className="mt-8 text-xl text-zinc-300">
+        <p>Machine Learning Engineer</p>
+        <p className="mt-1">Researcher • Writer</p>
+      </div>
 
-        <a
-          href="mailto:ritikashinde98@gmail.com"
-          className="mt-8 w-fit rounded-full border border-zinc-700 px-6 py-3 text-sm transition hover:border-white hover:bg-white hover:text-black"
-        >
-          Say Hello
-        </a>
-      </section>
+      <p className="mt-6 max-w-2xl text-lg text-[#AAB7A7]">
+        Building intelligent systems through machine learning,
+        computer vision, and generative AI.
+      </p>
+
+      <a
+        href="mailto:ritikashinde98@gmail.com"
+        className="mt-8 inline-block rounded-full bg-[#565449] px-6 py-3 text-sm text-[#FFFBF4] transition hover:bg-[#7BAE2B] hover:text-[#11120D]"
+      >
+        Say Hello
+      </a>
+    </div>
+
+    {/* RIGHT SIDE */}
+    <div className="flex justify-center lg:justify-end">
+      <RobotGame />
+    </div>
+
+  </div>
+</section>
 
       {/* ABOUT */}
       <FadeIn>
@@ -158,7 +171,7 @@ shadow-black/20
 
       {/* Text */}
       <div>
-        <p className="max-w-3xl text-lg leading-relaxed text-zinc-400">
+        <p className="max-w-3xl text-lg leading-relaxed text-[#AAB7A7]">
           I am an Automation & Robotics graduate focused on
           machine learning, computer vision, and generative AI.
 
@@ -173,7 +186,7 @@ shadow-black/20
           {skills.map((skill) => (
             <span
               key={skill}
-              className="rounded-full border border-zinc-800 px-4 py-2 text-sm text-zinc-300"
+              className="rounded-full bg-[#2A3D2F] px-4 py-2 text-sm text-[#D8CFBC] transition hover:bg-[#565449]"
             >
               {skill}
             </span>
@@ -191,7 +204,7 @@ shadow-black/20
           className="
             rounded-3xl
             border
-            border-zinc-800
+            border-[#2A3D2F]
             object-cover
             shadow-2xl
             shadow-black/40
@@ -225,9 +238,9 @@ shadow-black/20
       {/* Earth5R */}
       <div className="relative mb-24 pl-12">
 
-        <div className="absolute left-0 top-2 h-4 w-4 rounded-full bg-cyan-400" />
+        <div className="absolute left-0 top-2 h-4 w-4 rounded-full bg-[#7BAE2B]" />
 
-        <p className="text-sm text-cyan-400">
+        <p className="text-sm text-[#7BAE2B]">
           2024
         </p>
 
@@ -239,7 +252,7 @@ shadow-black/20
           Earth5R
         </p>
 
-        <p className="mt-3 max-w-2xl text-zinc-400">
+        <p className="mt-3 max-w-2xl text-[#AAB7A7]">
           Created technical content on artificial intelligence,
           machine learning, sustainability, and emerging
           environmental technologies.
@@ -250,9 +263,9 @@ shadow-black/20
       {/* IIT Hyderabad */}
       <div className="relative pl-12">
 
-        <div className="absolute left-0 top-2 h-4 w-4 rounded-full bg-cyan-400" />
+        <div className="absolute left-0 top-2 h-4 w-4 rounded-full bg-[#7BAE2B]" />
 
-        <p className="text-sm text-cyan-400">
+        <p className="text-sm text-[#7BAE2B]">
           2025
         </p>
 
@@ -264,7 +277,7 @@ shadow-black/20
           IIT Hyderabad
         </p>
 
-        <p className="mt-3 max-w-2xl text-zinc-400">
+        <p className="mt-3 max-w-2xl text-[#AAB7A7]">
           Built diffusion-based pipelines for generating
           cloud-free satellite imagery using SAR and
           optical data for remote sensing applications.
@@ -294,14 +307,15 @@ shadow-black/20
   className="
     rounded-3xl
     border
-    border-zinc-800
+    border-[#565449]
+    bg-[#2A2B25]
     p-8
     transition-all
     duration-300
     hover:-translate-y-1
-    hover:border-cyan-400
+    hover:border-[#7BAE2B]
     hover:shadow-xl
-    hover:shadow-cyan-500/5
+    hover:shadow-[#7BAE2B]/5
   ">
 
             <div className="flex items-center justify-between">
@@ -310,20 +324,20 @@ shadow-black/20
               </h3>
 
               <a
-                href="https://github.com/ritikashinde/ClearSightSAR"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-zinc-500 hover:text-white"
-              >
-                GitHub
-              </a>
+  href="https://github.com/ritikashinde/ClearSightSAR"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-[#AAB7A7] transition hover:text-[#7BAE2B]"
+>
+  <FaGithub size={22} />
+</a>
             </div>
 
-            <p className="mt-3 text-cyan-400">
+            <p className="mt-3 text-[#7BAE2B]">
               Research Project
             </p>
 
-            <p className="mt-4 text-zinc-400">
+            <p className="mt-4 text-[#AAB7A7]">
               Generating cloud-free optical satellite imagery
               using diffusion models and multimodal Earth
               observation data.
@@ -335,7 +349,8 @@ shadow-black/20
           </div>
 
           {/* SME Agent */}
-          <div className="rounded-3xl border border-zinc-800 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:shadow-xl hover:shadow-cyan-500/5">
+          <div className="rounded-3xl border border-[#565449]
+    bg-[#2A2B25] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#7BAE2B] hover:shadow-xl hover:shadow-[#7BAE2B]/5">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl font-semibold">
                 SME GenAI Agent
@@ -345,17 +360,17 @@ shadow-black/20
                 href="https://github.com/SME-GenAI-Agent/GenAI-Agent-for-SME-MSE-Business-insights"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-500 hover:text-white"
-              >
-                GitHub
+                className="text-[#AAB7A7] transition hover:text-[#7BAE2B]"
+>
+  <FaGithub size={22} />
               </a>
             </div>
 
-            <p className="mt-3 text-cyan-400">
+            <p className="mt-3 text-[#7BAE2B]">
               Multi-Agent AI System
             </p>
 
-            <p className="mt-4 text-zinc-400">
+            <p className="mt-4 text-[#AAB7A7]">
               AI-powered business intelligence platform
               for SME/MSME organizations using LLM agents.
             </p>
@@ -366,16 +381,17 @@ shadow-black/20
           </div>
 
           {/* VLM */}
-          <div className="rounded-3xl border border-zinc-800 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:shadow-xl hover:shadow-cyan-500/5">
+          <div className="rounded-3xl border border-[#565449]
+    bg-[#2A2B25] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#7BAE2B] hover:shadow-xl hover:shadow-[#7BAE2B]/5">
             <h3 className="text-2xl font-semibold">
               Vision-Language Manipulation System
             </h3>
 
-            <p className="mt-3 text-cyan-400">
+            <p className="mt-3 text-[#7BAE2B]">
               Vision-Language Robotics
             </p>
 
-            <p className="mt-4 text-zinc-400">
+            <p className="mt-4 text-[#AAB7A7]">
               Translating visual inputs and natural language
               instructions into robotic actions.
             </p>
@@ -386,7 +402,8 @@ shadow-black/20
           </div>
 
           {/* DataJanitor */}
-          <div className="rounded-3xl border border-zinc-800 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:shadow-xl hover:shadow-cyan-500/5">
+          <div className="rounded-3xl border border-[#565449]
+    bg-[#2A2B25] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#7BAE2B] hover:shadow-xl hover:shadow-[#7BAE2B]/5">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl font-semibold">
                 DataJanitor
@@ -396,17 +413,17 @@ shadow-black/20
                 href="https://github.com/ritikashinde/datajanitor-env"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-500 hover:text-white"
+                className="text-[#AAB7A7] transition hover:text-[#7BAE2B]"
               >
-                GitHub
+                 <FaGithub size={22} />
               </a>
             </div>
 
-            <p className="mt-3 text-cyan-400">
+            <p className="mt-3 text-[#7BAE2B]">
               Data Preparation Automation
             </p>
 
-            <p className="mt-4 text-zinc-400">
+            <p className="mt-4 text-[#AAB7A7]">
               Environment for automating data cleaning,
               validation, and preprocessing workflows.
             </p>
@@ -437,7 +454,7 @@ shadow-black/20
                 Dream Eater
               </h3>
 
-              <p className="mt-2 text-zinc-400">
+              <p className="mt-2 text-[#AAB7A7]">
                 Published poetry collection exploring existence,
                 memory, imagination, and the human experience.
               </p>
@@ -446,7 +463,7 @@ shadow-black/20
                 href="https://www.amazon.in/Dream-Eater-Poetic-Interpretation-Existence/dp/9369538437"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-block rounded-full border border-zinc-700 px-5 py-2 text-sm transition hover:border-white hover:bg-white hover:text-black"
+                className="mt-6 inline-block rounded-full bg-[#565449] px-5 py-2 text-sm text-[#FFFBF4] transition hover:bg-[#7BAE2B] hover:text-[#11120D]"
               >
                 View on Amazon
               </a>
@@ -459,10 +476,10 @@ shadow-black/20
               rel="noopener noreferrer"
               className="group block"
             >
-              <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-4 transition hover:border-zinc-600">
+              <div className="rounded-3xl border border-[#2A3D2F] bg-zinc-950 p-4 transition hover:border-zinc-600">
 
                 {/* Local static image from your public folder */}
-                <div className="aspect-[3/4] w-full overflow-hidden rounded-2xl border border-zinc-800 bg-black shadow-lg">
+                <div className="aspect-[3/4] w-full overflow-hidden rounded-2xl border border-[#2A3D2F] bg-black shadow-lg">
                   <img
                     src="/book-cover.jpeg"
                     alt="Dream Eater Book Cover"
@@ -484,7 +501,7 @@ shadow-black/20
               Indian Science Book Fellowship 2026 
             </h3>
 
-            <p className="mt-2 text-zinc-400">
+            <p className="mt-2 text-[#AAB7A7]">
               Shortlisted for the fellowship program supporting
               science communication and research-driven writing.
             </p>
@@ -503,7 +520,7 @@ shadow-black/20
     Creative Technology
   </h2>
 
-  <p className="mb-12 max-w-2xl text-zinc-400">
+  <p className="mb-12 max-w-2xl text-[#AAB7A7]">
     TouchDesigner experiments exploring motion systems,
     generative visuals, and real-time interactive graphics.
   </p>
@@ -516,17 +533,17 @@ group
 overflow-hidden
 rounded-3xl
 border
-border-zinc-800
+border-[#2A3D2F]
 transition-all
 duration-300
 hover:-translate-y-1
-hover:border-cyan-400
+hover:border-[#7BAE2B]
 hover:shadow-xl
-hover:shadow-cyan-500/5
+hover:shadow-[#7BAE2B]/5
 ">
 
       {/* GIF */}
-      <div className="aspect-square w-full overflow-hidden rounded-2xl border border-zinc-800 bg-black shadow-lg group-hover:shadow-cyan-500/10">
+      <div className="aspect-square w-full overflow-hidden rounded-2xl border border-[#2A3D2F] bg-black shadow-lg group-hover:shadow-[#7BAE2B]/10">
         <img
           src="/td1.gif"
           alt="Audio Reactive Grid Space"
@@ -539,7 +556,7 @@ hover:shadow-cyan-500/5
         <p className="text-sm text-zinc-200">
           Audio Reactive Grid Space
         </p>
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-[#AAB7A7]">
           TouchDesigner
         </p>
       </div>
@@ -552,16 +569,16 @@ group
 overflow-hidden
 rounded-3xl
 border
-border-zinc-800
+border-[#2A3D2F]
 transition-all
 duration-300
 hover:-translate-y-1
-hover:border-cyan-400
+hover:border-[#7BAE2B]
 hover:shadow-xl
-hover:shadow-cyan-500/5
+hover:shadow-[#7BAE2B]/5
 ">
 
-      <div className="aspect-square w-full overflow-hidden rounded-2xl border border-zinc-800 bg-black shadow-lg group-hover:shadow-cyan-500/10">
+      <div className="aspect-square w-full overflow-hidden rounded-2xl border border-[#2A3D2F] bg-black shadow-lg group-hover:shadow-[#7BAE2B]/10">
         <img
           src="/td2.gif"
           alt="Black Hole Simulation"
@@ -573,7 +590,7 @@ hover:shadow-cyan-500/5
         <p className="text-sm text-zinc-200">
           Black Hole Simulation
         </p>
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-[#AAB7A7]">
           TouchDesigner
         </p>
       </div>
@@ -586,16 +603,16 @@ group
 overflow-hidden
 rounded-3xl
 border
-border-zinc-800
+border-[#2A3D2F]
 transition-all
 duration-300
 hover:-translate-y-1
-hover:border-cyan-400
+hover:border-[#7BAE2B]
 hover:shadow-xl
-hover:shadow-cyan-500/5
+hover:shadow-[#7BAE2B]/5
 ">
 
-      <div className="aspect-square w-full overflow-hidden rounded-2xl border border-zinc-800 bg-black shadow-lg group-hover:shadow-cyan-500/10">
+      <div className="aspect-square w-full overflow-hidden rounded-2xl border border-[#2A3D2F] bg-black shadow-lg group-hover:shadow-[#7BAE2B]/10">
         <img
           src="/td3.gif"
           alt="Ray Pop"
@@ -607,7 +624,7 @@ hover:shadow-cyan-500/5
         <p className="text-sm text-zinc-200">
           Ray Pop
         </p>
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-[#AAB7A7]">
           TouchDesigner
         </p>
       </div>

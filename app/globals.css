@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #11120D;
+  --foreground: #FFFBF4;
 }
 
 @theme inline {
@@ -14,8 +14,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #11120D;
+    --foreground: #FFFBF4;
   }
 }
 
@@ -26,11 +26,21 @@ body {
 }
 .grid-bg {
   background-image:
-    linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+    linear-gradient(rgba(62,90,65,0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62,90,65,0.25) 1px, transparent 1px);
 
   background-size: 40px 40px;
 }
 html {
   scroll-behavior: smooth;
+}
+@keyframes robotFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
