@@ -117,7 +117,7 @@ shadow-black/20
       {/* HERO */}
       <section
   id="home"
-  className="flex min-h-screen items-center px-8 pt-32 md:px-20"
+  className="flex min-h-screen items-center px-6 pt-32 md:px-20"
 >
   <div className="grid w-full items-center gap-16 lg:grid-cols-2">
 
@@ -148,9 +148,10 @@ shadow-black/20
     </div>
 
     {/* RIGHT SIDE */}
-    <div className="flex justify-center lg:justify-end">
-      <RobotGame />
-    </div>
+    {/* RIGHT SIDE */}
+<div className="hidden lg:flex justify-center lg:justify-end">
+  <RobotGame />
+</div>
 
   </div>
 </section>
@@ -195,7 +196,8 @@ shadow-black/20
       </div>
 
       {/* Photo */}
-      <div className="flex justify-center md:justify-end">
+      {/* Photo */}
+<div className="hidden lg:flex justify-center md:justify-end">
         <Image
           src="/ritikas.jpeg"
           alt="Ritika Shinde"
