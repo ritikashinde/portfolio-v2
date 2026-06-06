@@ -406,13 +406,13 @@ shadow-black/20
   </p>
 
   <p className="mt-4 text-[#AAB7A7]">
-    Vision-Language robotic manipulation system enabling
-    autonomous pick-and-place tasks through language-guided
-    action generation and robot control.
+    Integrated OpenVLA into a multimodal perception-to-action
+  pipeline for autonomous object manipulation using vision,
+  language understanding, and action generation.
   </p>
 
   <p className="mt-8 text-sm text-zinc-500">
-    OpenVLA • PyBullet • PyTorch • Robotics
+    OpenVLA • PyBullet • Multimodal AI • Computer Vision
   </p>
 </div>
 
