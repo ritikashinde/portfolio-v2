@@ -382,26 +382,39 @@ shadow-black/20
             </p>
           </div>
 
-          {/* VLM */}
-          <div className="rounded-3xl border border-[#565449]
-    bg-[#2A2B25] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#7BAE2B] hover:shadow-xl hover:shadow-[#7BAE2B]/5">
-            <h3 className="text-2xl font-semibold">
-              Vision-Language Manipulation System
-            </h3>
+          {/* VLM Manipulation System */}
+<div className="rounded-3xl border border-[#565449]
+  bg-[#2A2B25] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#7BAE2B] hover:shadow-xl hover:shadow-[#7BAE2B]/5">
 
-            <p className="mt-3 text-[#7BAE2B]">
-              Vision-Language Robotics
-            </p>
+  <div className="flex items-center justify-between">
+    <h3 className="text-2xl font-semibold">
+      VLM Manipulation System
+    </h3>
 
-            <p className="mt-4 text-[#AAB7A7]">
-              Translating visual inputs and natural language
-              instructions into robotic actions.
-            </p>
+    <a
+      href="https://github.com/ritikashinde/VLM-Manipulation-System"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[#AAB7A7] transition hover:text-[#7BAE2B]"
+    >
+      <FaGithub size={22} />
+    </a>
+  </div>
 
-            <p className="mt-8 text-sm text-zinc-500">
-              VLMs • Computer Vision • Robotics
-            </p>
-          </div>
+  <p className="mt-3 text-[#7BAE2B]">
+    Embodied AI & Robotics
+  </p>
+
+  <p className="mt-4 text-[#AAB7A7]">
+    Vision-Language robotic manipulation system enabling
+    autonomous pick-and-place tasks through language-guided
+    action generation and robot control.
+  </p>
+
+  <p className="mt-8 text-sm text-zinc-500">
+    OpenVLA • PyBullet • PyTorch • Robotics
+  </p>
+</div>
 
           {/* DataJanitor */}
           <div className="rounded-3xl border border-[#565449]
