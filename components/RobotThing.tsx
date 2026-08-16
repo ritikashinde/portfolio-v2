@@ -166,12 +166,11 @@ if (keys.right) newX += moveSpeed;
   }, [keys, velocityY, won]);
 
   return (
-    <div className="relative h-[500px] w-[650px] overflow-hidden rounded-3xl border border-zinc-800 bg-black/30">
-
+    <div className="relative h-[500px] w-[650px] max-w-full overflow-hidden rounded-none border border-[#EDE9E0]/[0.14] bg-[#16130F]">
       {/* Controls */}
-      <p className="absolute right-4 top-4 text-xs text-zinc-500">
-        ← → Move • Space Jump
-      </p>
+      <p className="absolute right-4 bottom-4 font-mono text-[11px] tracking-wide text-[#EDE9E0]/50">
+  ← → Move • Space Jump
+</p>
 
       {/* Start Label */}
       <div
@@ -232,21 +231,22 @@ if (keys.right) newX += moveSpeed;
       {won && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/85 backdrop-blur-sm">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-violet-400">
-              Mission Complete
-            </h2>
+            <h2
+  className="text-3xl font-bold"
+  style={{ color: "#9E968A" }}
+>
+  Mission Complete
+</h2>
 
             <p className="mt-4 text-zinc-300">
               You helped the robot reach the end.
             </p>
 
-            <p className="mt-2 text-zinc-400">
-              Now scroll down to explore my journey ↓
-            </p>
+            
 
-            <p className="mt-6 text-sm text-zinc-500">
-              Press R to play again
-            </p>
+            <p className="mt-6 font-mono text-[11px] tracking-wide !text-[#EDE9E0]/50">
+  Press R to play again
+</p>
           </div>
         </div>
       )}

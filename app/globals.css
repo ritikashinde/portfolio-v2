@@ -1,46 +1,62 @@
 @import "tailwindcss";
 
 :root {
-  --background: #11120D;
-  --foreground: #FFFBF4;
+  --background: #EDE9E0;
+  --foreground: #16130F;
+  --muted: #6B6558;
+  --line: rgba(22, 19, 15, 0.14);
+  --lime: #B8FF3C;
+  --rust: #7C4A2D;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #11120D;
-    --foreground: #FFFBF4;
-  }
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-lime: var(--lime);
+  --color-rust: var(--rust);
+  --font-display: var(--font-fraunces);
+  --font-heavy: var(--font-archivo-black);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  position: relative;
 }
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(62,90,65,0.25) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(62,90,65,0.25) 1px, transparent 1px);
 
-  background-size: 40px 40px;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
 }
+
+::selection {
+  background: var(--lime);
+  color: var(--foreground);
+}
+
 html {
   scroll-behavior: smooth;
 }
-@keyframes robotFloat {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
 
-  50% {
-    transform: translateY(-8px);
+.marquee-track {
+  animation: scroll 22s linear infinite;
+}
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
   }
 }
