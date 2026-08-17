@@ -10,6 +10,7 @@ export default function WorkCard({
   image,
   stack,
   href,
+  creativeTech,
 }: {
   num: string;
   cryptic: string;
@@ -18,21 +19,23 @@ export default function WorkCard({
   image?: string;
   stack: string;
   href: string;
+  creativeTech?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [resolved, setResolved] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setResolved(true);
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
       },
-      { threshold: 0.35 }
+      { threshold: 0.15 }
     );
 
     observer.observe(el);
@@ -40,78 +43,171 @@ export default function WorkCard({
     return () => observer.disconnect();
   }, []);
 
+  const imageLeft = Number(num) % 2 === 0;
+
   return (
-    <div
+    <article
       ref={ref}
-      className="relative py-10 md:py-12 border-t border-line last:border-b"
+      className={`
+        relative
+        border-t border-line
+        last:border-b
+        transition-all duration-700 ease-out
+        ${
+          visible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-6"
+        }
+      `}
     >
-      {/* Noise / dissolve effect */}
-      <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-[1300ms]"
-        style={{
-          opacity: resolved ? 0 : 1,
-          backgroundImage:
-            "repeating-conic-gradient(from 0deg, rgba(22,19,15,0.05) 0deg 2deg, transparent 2deg 6deg)",
-        }}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[520px]">
 
-      {/* Project heading */}
-      <div className="relative grid grid-cols-1 md:grid-cols-[80px_1fr_220px] gap-6 md:gap-8 items-start">
-        <div className="font-heavy text-[13px] text-muted">
-          {num}
-        </div>
+        {/* LEFT HALF */}
+        {imageLeft && (
+          <div
+  className={`flex flex-col py-12 md:py-16 md:pr-16 border-b md:border-b-0 md:border-r border-line ${
+    creativeTech && !image
+      ? "justify-end"
+      : "justify-center"
+  }`}
+>
+            {/* NORMAL PROJECT IMAGE */}
+            {image && (
+              <div className="w-full max-w-[620px] overflow-hidden rounded-[10px] border border-line">
+                <img
+                  src={image}
+                  alt={realName}
+                  className="
+                    block
+                    w-full
+                    h-auto
+                    transition-transform
+                    duration-700
+                    ease-out
+                    hover:scale-[1.015]
+                  "
+                />
+              </div>
+            )}
 
-        <div>
-          <div className="font-display italic text-2xl md:text-[32px] leading-snug">
-            {cryptic}
+            {/* CREATIVE TECH */}
+            {!image && creativeTech && (
+              <div className="max-w-[330px]">
+
+                <p className="font-sans text-[14px] md:text-[15px] leading-relaxed text-muted">
+                  <span className="text-foreground">
+                    Not everything I make is ML.
+                  </span>{" "}
+                  Sometimes I explore what happens when code becomes image,
+                  motion, interaction, or atmosphere.
+                </p>
+
+                <a
+                  href="#creative"
+                  className="
+                    inline-block
+                    mt-5
+                    font-mono
+                    text-[11px]
+                    tracking-[0.08em]
+                    text-foreground
+                    border-b border-line
+                    hover:border-rust
+                    hover:text-rust
+                    transition-colors
+                  "
+                >
+                  CREATIVE TECH →
+                </a>
+
+              </div>
+            )}
+
+          </div>
+        )}
+
+        {/* INFORMATION */}
+        <div
+          className={`
+            flex
+            flex-col
+            justify-center
+            py-14
+            md:py-16
+            ${imageLeft ? "md:pl-10" : "md:pr-10"}
+          `}
+        >
+          {/* Number */}
+          <div className="font-heavy text-[13px] text-muted mb-8">
+            {num}
           </div>
 
-          <span className="block mt-2.5 font-mono text-[11px] uppercase tracking-[0.06em] text-rust">
+          {/* Main title */}
+          <h2 className="font-display italic text-2xl md:text-[34px] leading-[1.15] max-w-[650px]">
+            {cryptic}
+          </h2>
+
+          {/* Project name */}
+          <span className="block mt-3 font-mono text-[11px] uppercase tracking-[0.06em] text-rust">
             {realName}
           </span>
+
+          {/* Description */}
+          {description && (
+            <p className="font-sans text-sm md:text-[16px] leading-relaxed text-muted max-w-[620px] mt-7 line-clamp-3">
+              {description}
+            </p>
+          )}
+
+          {/* Bottom metadata */}
+          <div className="mt-8 pt-5 border-t border-line max-w-[620px]">
+            <div className="font-mono text-[11px] text-muted">
+              {stack}
+            </div>
+
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-block
+                mt-3
+                font-mono
+                text-[11px]
+                text-foreground
+                border-b border-line
+                hover:border-rust
+                hover:text-rust
+                transition-colors
+              "
+            >
+              repo →
+            </a>
+          </div>
         </div>
 
-        <div className="font-mono text-[11px] text-muted md:text-right">
-          {stack}
-          <br />
-
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-2 text-foreground border-b border-line hover:border-rust hover:text-rust transition-colors"
-          >
-            repo →
-          </a>
-        </div>
-      </div>
-
-      {/* Project image + description */}
-      <div className="relative md:ml-[104px] md:mr-[244px] mt-8">
-        {image && (
-  <div
-    className={`overflow-hidden border border-line ${
-  num === "001"
-    ? "w-full"
-    : num === "003"
-      ? "w-full md:w-[55%]"
-      : "w-full md:w-[72%]"
-}`}
-  >
-    <img
-      src={image}
-      alt={realName}
-      className="block w-full h-auto"
-    />
-  </div>
-)}
-
-        {description && (
-  <p className="font-sans text-sm md:text-[16px] leading-relaxed text-muted max-w-none mt-6">
-    {description}
-          </p>
+        {/* RIGHT HALF — ODD PROJECTS */}
+        {!imageLeft && image && (
+          <div className="flex items-center justify-center py-12 md:py-16 md:pl-10 md:order-2 border-t md:border-t-0">
+            <div className="w-full max-w-[620px] overflow-hidden rounded-[10px] border border-line">
+              <img
+                src={image}
+                alt={realName}
+                className="
+                  block
+                  w-full
+                  h-auto
+                  transition-transform
+                  duration-700
+                  ease-out
+                  hover:scale-[1.015]
+                "
+              />
+            </div>
+          </div>
         )}
+
       </div>
-    </div>
+    </article>
   );
 }
