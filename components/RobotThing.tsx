@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ROBOT_SIZE = 32;
+
 const GRAVITY = 0.7;
 const JUMP_FORCE = -13;
+const MOVE_SPEED = 4.5;
 
 const platforms = [
-  { x: 40,  y: 90,  w: 80 },   // Start
+  { x: 40, y: 90, w: 80 },
 
   { x: 180, y: 140, w: 80 },
   { x: 320, y: 180, w: 80 },
@@ -21,9 +23,9 @@ const platforms = [
 
   { x: 340, y: 400, w: 80 },
 
-  { x: 500, y: 430, w: 100 }, // final route
+  { x: 500, y: 430, w: 100 },
 
-  { x: 560, y: 390, w: 40 },  // goal support
+  { x: 560, y: 390, w: 40 },
 ];
 
 const goal = {
@@ -32,69 +34,85 @@ const goal = {
   size: 40,
 };
 
+const START_POSITION = {
+  x: 60,
+  y: 40,
+};
+
 export default function RobotGame() {
-  const [position, setPosition] = useState({
-    x: 60,
-    y: 40,
-  });
+  const [position, setPosition] = useState(START_POSITION);
+  const [won, setWon] = useState(false);
 
-  const [velocityY, setVelocityY] = useState(0);
+  // Keep game state outside React's render cycle.
+  const positionRef = useRef(START_POSITION);
+  const velocityYRef = useRef(0);
 
-  const [keys, setKeys] = useState({
+  const keysRef = useRef({
     left: false,
     right: false,
   });
 
-  const [won, setWon] = useState(false);
+  const wonRef = useRef(false);
 
   const resetGame = () => {
-    setPosition({
-      x: 60,
-      y: 40,
-    });
+    const start = { ...START_POSITION };
 
-    setVelocityY(0);
+    positionRef.current = start;
+    velocityYRef.current = 0;
+    wonRef.current = false;
+
+    setPosition(start);
     setWon(false);
   };
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (won) {
-        if (e.key.toLowerCase() === "r") {
-          resetGame();
-        }
-        return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        keysRef.current.right = true;
       }
 
-      if (e.key === "ArrowRight") {
-        setKeys((prev) => ({ ...prev, right: true }));
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        keysRef.current.left = true;
       }
 
-      if (e.key === "ArrowLeft") {
-        setKeys((prev) => ({ ...prev, left: true }));
-      }
+      if (event.code === "Space") {
+        event.preventDefault();
 
-      if (e.code === "Space") {
+        if (wonRef.current) return;
+
+        const currentPosition = positionRef.current;
+
         const standingOnPlatform = platforms.some(
           (platform) =>
-            position.x + ROBOT_SIZE > platform.x &&
-            position.x < platform.x + platform.w &&
-            Math.abs(position.y + ROBOT_SIZE - platform.y) < 10
+            currentPosition.x + ROBOT_SIZE > platform.x &&
+            currentPosition.x < platform.x + platform.w &&
+            Math.abs(
+              currentPosition.y + ROBOT_SIZE - platform.y
+            ) < 8
         );
 
         if (standingOnPlatform) {
-          setVelocityY(JUMP_FORCE);
+          velocityYRef.current = JUMP_FORCE;
         }
+      }
+
+      if (
+        event.key.toLowerCase() === "r" &&
+        wonRef.current
+      ) {
+        resetGame();
       }
     };
 
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") {
-        setKeys((prev) => ({ ...prev, right: false }));
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        keysRef.current.right = false;
       }
 
-      if (e.key === "ArrowLeft") {
-        setKeys((prev) => ({ ...prev, left: false }));
+      if (event.key === "ArrowLeft") {
+        keysRef.current.left = false;
       }
     };
 
@@ -105,43 +123,76 @@ export default function RobotGame() {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [position, won]);
+  }, []);
 
   useEffect(() => {
-    if (won) return;
+    let animationFrame: number;
 
-    const interval = setInterval(() => {
-      setPosition((prev) => {
-        let newX = prev.x;
-        let newY = prev.y;
+    const gameLoop = () => {
+      if (!wonRef.current) {
+        const current = positionRef.current;
 
-        const moveSpeed = velocityY !== 0 ? 3 : 5;
+        let newX = current.x;
+        let newY = current.y;
 
-if (keys.left) newX -= moveSpeed;
-if (keys.right) newX += moveSpeed;
+        // --------------------------------
+        // HORIZONTAL MOVEMENT
+        // --------------------------------
 
-        newX = Math.max(0, Math.min(newX, 620));
+        if (keysRef.current.left) {
+          newX -= MOVE_SPEED;
+        }
 
-        let newVelocity = velocityY + GRAVITY;
-        newY += newVelocity;
+        if (keysRef.current.right) {
+          newX += MOVE_SPEED;
+        }
+
+        // Keep robot inside game area
+        newX = Math.max(
+          0,
+          Math.min(newX, 650 - ROBOT_SIZE)
+        );
+
+        // --------------------------------
+        // GRAVITY
+        // --------------------------------
+
+        let newVelocityY =
+          velocityYRef.current + GRAVITY;
+
+        newY += newVelocityY;
+
+        // --------------------------------
+        // PLATFORM COLLISION
+        // --------------------------------
 
         for (const platform of platforms) {
-          const landedOnPlatform =
+          const landed =
             newX + ROBOT_SIZE > platform.x &&
             newX < platform.x + platform.w &&
-            prev.y + ROBOT_SIZE <= platform.y &&
+            current.y + ROBOT_SIZE <= platform.y &&
             newY + ROBOT_SIZE >= platform.y;
 
-          if (landedOnPlatform) {
+          if (landed) {
             newY = platform.y - ROBOT_SIZE;
-            newVelocity = 0;
+            newVelocityY = 0;
           }
         }
 
+        // --------------------------------
+        // FALL / RESET
+        // --------------------------------
+
         if (newY > 500) {
           resetGame();
-          return prev;
+
+          animationFrame = requestAnimationFrame(gameLoop);
+          return;
         }
+
+        // --------------------------------
+        // GOAL
+        // --------------------------------
 
         const touchingGoal =
           newX + ROBOT_SIZE > goal.x &&
@@ -150,27 +201,43 @@ if (keys.right) newX += moveSpeed;
           newY < goal.y + goal.size;
 
         if (touchingGoal) {
+          wonRef.current = true;
           setWon(true);
         }
 
-        setVelocityY(newVelocity);
+        // --------------------------------
+        // SAVE PHYSICS STATE
+        // --------------------------------
 
-        return {
+        const nextPosition = {
           x: newX,
           y: newY,
         };
-      });
-    }, 16);
 
-    return () => clearInterval(interval);
-  }, [keys, velocityY, won]);
+        positionRef.current = nextPosition;
+        velocityYRef.current = newVelocityY;
+
+        // React only needs to render the latest position.
+        setPosition(nextPosition);
+      }
+
+      animationFrame = requestAnimationFrame(gameLoop);
+    };
+
+    animationFrame = requestAnimationFrame(gameLoop);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   return (
     <div className="relative h-[500px] w-[650px] max-w-full overflow-hidden rounded-none border border-[#EDE9E0]/[0.14] bg-[#16130F]">
+
       {/* Controls */}
       <p className="absolute right-4 bottom-4 font-mono text-[11px] tracking-wide text-[#EDE9E0]/50">
-  ← → Move • Space Jump
-</p>
+        ← → Move • Space Jump
+      </p>
 
       {/* Start Label */}
       <div
@@ -187,7 +254,7 @@ if (keys.right) newX += moveSpeed;
       {platforms.map((platform, index) => (
         <div
           key={index}
-          className="absolute rounded-full #7BAE2B bg-emerald-400/20"
+          className="absolute rounded-full bg-emerald-400/20"
           style={{
             left: platform.x,
             top: platform.y,
@@ -198,55 +265,59 @@ if (keys.right) newX += moveSpeed;
       ))}
 
       {/* Goal Tile */}
-<div
-  className="absolute rounded-xl border border-[#7BAE2B] bg-[#7BAE2B]/10"
-  style={{
-    left: goal.x,
-    top: goal.y,
-    width: goal.size,
-    height: goal.size,
-    boxShadow: "0 0 20px rgba(123,174,43,0.45)",
-  }}
-
+      <div
+        className="absolute rounded-xl border border-[#7BAE2B] bg-[#7BAE2B]/10"
+        style={{
+          left: goal.x,
+          top: goal.y,
+          width: goal.size,
+          height: goal.size,
+          boxShadow:
+            "0 0 20px rgba(123,174,43,0.45)",
+        }}
       />
 
       {/* Robot */}
-<div
-  className="absolute flex items-center justify-center rounded-md border border-[#7BAE2B] bg-[#16231B]"
-  style={{
-    left: position.x,
-    top: position.y,
-    width: ROBOT_SIZE,
-    height: ROBOT_SIZE,
-    animation: "robotFloat 2s ease-in-out infinite",
-  }}
->
-  <div className="flex gap-1">
-    <div className="h-1.5 w-1.5 rounded-full bg-[#D8E1D3]" />
-    <div className="h-1.5 w-1.5 rounded-full bg-[#D8E1D3]" />
-  </div>
-</div>
+      <div
+        className="absolute flex items-center justify-center rounded-md border border-[#7BAE2B] bg-[#16231B]"
+        style={{
+          left: position.x,
+          top: position.y,
+          width: ROBOT_SIZE,
+          height: ROBOT_SIZE,
+
+          // Keep the little idle movement,
+          // but don't use it for gameplay physics.
+          animation:
+            "robotFloat 2s ease-in-out infinite",
+        }}
+      >
+        <div className="flex gap-1">
+          <div className="h-1.5 w-1.5 rounded-full bg-[#D8E1D3]" />
+          <div className="h-1.5 w-1.5 rounded-full bg-[#D8E1D3]" />
+        </div>
+      </div>
 
       {/* Win Screen */}
       {won && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/85 backdrop-blur-sm">
           <div className="text-center">
+
             <h2
-  className="text-3xl font-bold"
-  style={{ color: "#9E968A" }}
->
-  Mission Complete
-</h2>
+              className="text-3xl font-bold"
+              style={{ color: "#9E968A" }}
+            >
+              Mission Complete
+            </h2>
 
             <p className="mt-4 text-zinc-300">
               You helped the robot reach the end.
             </p>
 
-            
-
             <p className="mt-6 font-mono text-[11px] tracking-wide !text-[#EDE9E0]/50">
-  Press R to play again
-</p>
+              Press R to play again
+            </p>
+
           </div>
         </div>
       )}
